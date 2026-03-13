@@ -25,8 +25,8 @@ Oracle Cloud free tier, and open-source ML/AI libraries.
 
 **1.1 Problem Statement**
 
-In automotive HIL and SDV validation environments (such as the GM SDV2
-project at KPIT), the following pain points exist:
+In automotive HIL and SDV validation environments, the following pain
+points exist:
 
 -   Test failures are diagnosed manually by engineers reviewing raw logs
     --- slow and inconsistent
@@ -54,7 +54,7 @@ The platform automates these four concerns end-to-end:
                                UDS/CAN signal patterns
 
   Manual test case writing     LLM agent reads ECU spec PDFs and
-                               generates MTF-format test cases
+                               generates automotive YAML test cases
 
   No artifact promotion gates  GitHub Actions pipeline with GHCR + GitHub
                                Packages + approval gates
@@ -92,9 +92,9 @@ The platform automates these four concerns end-to-end:
                   simulation       diagnostic response       Diagnostics
                                    sequences                 
 
-  Automotive      MTF-format test  AI-generated test cases   TE MTF
-                  output           in MTF-compatible YAML    
-                                   format                    
+  Automotive      automotive       AI-generated test cases   Automotive Test
+                  YAML-format test in automotive YAML format Framework
+                  output                                     
 
   AI / ML         scikit-learn     Anomaly detection on ECU  ML / Anomaly
                   (Isolation       signal time-series data   Detection
@@ -135,7 +135,7 @@ feedback loops:
                   faults                               
 
   2\. Test Runner Executes test cases against          Python, pytest,
-                  simulated signals; produces          MTF-format YAML
+                  simulated signals; produces          automotive YAML
                   pass/fail + signal logs              
 
   3\. Anomaly     Reads signal logs; flags abnormal    scikit-learn, pandas,
@@ -147,7 +147,7 @@ feedback loops:
                   RCA report                           
 
   5\. Test Case   Reads ECU spec PDF; generates new    LangChain, OpenAI,
-  Generator       MTF-format test cases via LLM        PyMuPDF
+  Generator       automotive YAML test cases via LLM   PyMuPDF
   -----------------------------------------------------------------------------
 
 **3.2 Pipeline Flow**
@@ -249,7 +249,7 @@ values, and execution time per test.
   -----------------------------------------------------------------------
   **Module**            **Description**
   --------------------- -------------------------------------------------
-  test_loader.py        Parses MTF-compatible YAML test case definitions
+  test_loader.py        Parses automotive YAML test case definitions
 
   signal_matcher.py     Matches test case assertions against signal log
                         entries by service ID and timestamp window
@@ -320,8 +320,8 @@ remediation suggestion.
 
 Reads an ECU specification PDF (UDS or OBD-II spec document), chunks it
 into sections, embeds into ChromaDB, and uses an LLM to generate new
-test cases in MTF-compatible YAML format. Generated test cases are
-committed back to the repo via a GitHub Actions step.
+test cases in automotive YAML format. Generated test cases are committed
+back to the repo via a GitHub Actions step.
 
   -------------------------------------------------------------------------
   **Module**              **Description**
@@ -336,8 +336,8 @@ committed back to the repo via a GitHub Actions step.
                           sections and prompts GPT-4o to generate YAML test
                           cases
 
-  yaml_validator.py       Validates generated YAML against MTF test case
-                          schema before committing
+  yaml_validator.py       Validates generated YAML against automotive test
+                          case schema before committing
 
   auto_commit.py          Uses GitHub API (PyGithub) to commit generated
                           test cases to a new branch and open a PR
@@ -425,7 +425,7 @@ committed back to the repo via a GitHub Actions step.
 
   signal_matcher.py               Assertion engine
 
-  test_cases/                     MTF-format YAML test case definitions
+  test_cases/                     automotive YAML test case definitions
 
   Dockerfile                      Test runner container
 
@@ -455,7 +455,7 @@ committed back to the repo via a GitHub Actions step.
 
   testcase_generator.py           LLM test case synthesis chain
 
-  yaml_validator.py               MTF schema validator
+  yaml_validator.py               automotive test case schema validator
 
   Dockerfile                      Generator container
 
@@ -523,8 +523,9 @@ data.
   **Task**                             **Details**               **Est.
                                                                  Hours**
   ------------------------------------ ------------------------- ---------
-  YAML test case schema                Define MTF-compatible     2h
-                                       schema: service_id,       
+  YAML test case schema                Define automotive         2h
+                                       YAML-compatible schema:   
+                                       service_id,               
                                        expected_response,        
                                        tolerance                 
 
@@ -615,7 +616,8 @@ data.
                                        sections → prompt GPT-4o  
                                        → output YAML test cases  
 
-  YAML validator                       Validate against MTF      2h
+  YAML validator                       Validate against          2h
+                                       automotive test case      
                                        schema, reject malformed  
                                        output                    
 
@@ -705,8 +707,8 @@ section:
     knowledge base
 
 -   Built an LLM-powered test case generator that parses ECU
-    specification PDFs and produces MTF-compatible YAML test cases via a
-    RAG pipeline
+    specification PDFs and produces automotive YAML test cases via a RAG
+    pipeline
 
 -   Deployed all services as Kubernetes workloads on k3s (Oracle Cloud
     free tier) provisioned with Terraform
