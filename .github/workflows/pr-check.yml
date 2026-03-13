@@ -1,0 +1,35 @@
+name: PR Title Check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Validate PR title format
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "Checking PR title: '$PR_TITLE'"
+
+          # Must start with a valid conventional commit type
+          if ! echo "$PR_TITLE" | grep -qE '^(feat|fix|chore|docs|test|ci):'; then
+            echo "::error::PR title must start with one of: feat: | fix: | chore: | docs: | test: | ci:"
+            echo ""
+            echo "Example: feat: build UDS simulator (#12)"
+            exit 1
+          fi
+
+          # Must contain a GitHub issue reference (#N)
+          if ! echo "$PR_TITLE" | grep -qE '\(#[0-9]+\)'; then
+            echo "::error::PR title must reference a GitHub Issue in the format (#N)"
+            echo ""
+            echo "Example: feat: build UDS simulator (#12)"
+            exit 1
+          fi
+
+          echo "✅ PR title format is valid"
