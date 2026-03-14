@@ -89,24 +89,37 @@ def inject_faults(
     rng = np.random.default_rng(rng_seed)
     result = copy.deepcopy(sequences)
 
-    n_total = len(result)
-    n_faults = int(n_total * fault_rate)
+    # Group indices by signal_id so we corrupt entire sequences at once
+    signal_groups: dict[str, list[int]] = {}
+    for i, seq in enumerate(result):
+        sid = seq["signal_id"]
+        if sid not in signal_groups:
+            signal_groups[sid] = []
+        signal_groups[sid].append(i)
+
+    # The total number of sequences is the number of distinct signal_ids
+    unique_signals = list(signal_groups.keys())
+    n_total_sequences = len(unique_signals)
+    n_faults = int(n_total_sequences * fault_rate)
 
     if n_faults == 0:
         return result
 
-    # Pick indices to corrupt (without replacement)
-    fault_indices = rng.choice(n_total, size=n_faults, replace=False)
+    # Pick signal_ids to corrupt (without replacement)
+    fault_signal_indices = rng.choice(n_total_sequences, size=n_faults, replace=False)
 
-    for idx in fault_indices:
+    for idx in fault_signal_indices:
         fault_type = rng.choice(FAULT_TYPES)
-        seq = result[int(idx)]
-
-        if fault_type == FAULT_NRC:
-            _inject_nrc_error(seq, rng)
-        elif fault_type == FAULT_TIMEOUT:
-            _inject_timeout(seq)
-        elif fault_type == FAULT_OUT_OF_RANGE:
-            _inject_out_of_range(seq, rng)
+        faulty_signal_id = unique_signals[int(idx)]
+        
+        # Apply the chosen fault type to every row in this sequence
+        for row_idx in signal_groups[faulty_signal_id]:
+            seq = result[row_idx]
+            if fault_type == FAULT_NRC:
+                _inject_nrc_error(seq, rng)
+            elif fault_type == FAULT_TIMEOUT:
+                _inject_timeout(seq)
+            elif fault_type == FAULT_OUT_OF_RANGE:
+                _inject_out_of_range(seq, rng)
 
     return result
