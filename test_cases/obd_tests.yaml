@@ -1,0 +1,69 @@
+- test_id: OBD_01_RPM_Normal
+  signal_type: OBD
+  service_id: "0x0C"
+  expected_response: 3000.0
+  tolerance: 2500.0
+  max_response_time_ms: 100
+
+- test_id: OBD_02_RPM_Normal
+  signal_type: OBD
+  service_id: "0x0C"
+  expected_response: 3000.0
+  tolerance: 2500.0
+  max_response_time_ms: 100
+
+- test_id: OBD_03_RPM_Normal
+  signal_type: OBD
+  service_id: "0x0C"
+  expected_response: 3000.0
+  tolerance: 2500.0
+  max_response_time_ms: 100
+
+- test_id: OBD_04_Coolant_Temp_Normal
+  signal_type: OBD
+  service_id: "0x05"
+  expected_response: 90.0
+  tolerance: 60.0
+  max_response_time_ms: 100
+
+- test_id: OBD_05_Coolant_Temp_Normal
+  signal_type: OBD
+  service_id: "0x05"
+  expected_response: 90.0
+  tolerance: 60.0
+  max_response_time_ms: 100
+
+- test_id: OBD_06_Coolant_Temp_Normal
+  signal_type: OBD
+  service_id: "0x05"
+  expected_response: 90.0
+  tolerance: 60.0
+  max_response_time_ms: 100
+
+- test_id: OBD_07_O2_Sensor_Normal
+  signal_type: OBD
+  service_id: "0x14"
+  expected_response: 0.45
+  tolerance: 0.4
+  max_response_time_ms: 100
+
+- test_id: OBD_08_O2_Sensor_Normal
+  signal_type: OBD
+  service_id: "0x14"
+  expected_response: 0.45
+  tolerance: 0.4
+  max_response_time_ms: 100
+
+- test_id: OBD_09_O2_Sensor_Normal
+  signal_type: OBD
+  service_id: "0x14"
+  expected_response: 0.45
+  tolerance: 0.4
+  max_response_time_ms: 100
+
+- test_id: OBD_10_Intentional_Fail
+  signal_type: OBD
+  service_id: "0x0C"
+  expected_response: 9000.0
+  tolerance: 1.0
+  max_response_time_ms: 10
