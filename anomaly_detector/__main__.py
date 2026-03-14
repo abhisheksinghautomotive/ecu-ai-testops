@@ -74,7 +74,7 @@ def main() -> None:
 
     if args.mode == "train":
         print("Initializing Training Pipeline...")
-        # Assume training data might have some faults, IsolationForest contamination parameter expects this
+        # Isolation Forest contamination parameter expects a known fault rate
         trainer = Trainer(contamination=args.contamination)
         trainer.train_and_save(df, model_name="isolation_forest.pkl")
         print("Training pipeline finished.")

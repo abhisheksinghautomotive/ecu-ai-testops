@@ -26,7 +26,9 @@ class Detector:
         self.model_name = model_name
         self.model = None
 
-    def detect_anomalies(self, df: pd.DataFrame, report_name: str = "anomaly_report.json") -> dict[str, Any]:
+    def detect_anomalies(
+        self, df: pd.DataFrame, report_name: str = "anomaly_report.json"
+    ) -> dict[str, Any]:
         """Run inference on the feature set and generate a report.
 
         Args:

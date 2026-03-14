@@ -37,7 +37,9 @@ class Evaluator:
         grouped = self.df.groupby("signal_id")["fault_label"].first()
 
         # Build predicted anomalies list from the report
-        predicted_anomaly_ids = {anomaly["signal_id"] for anomaly in self.report.get("anomalies", [])}
+        predicted_anomaly_ids = {
+            anomaly["signal_id"] for anomaly in self.report.get("anomalies", [])
+        }
 
         # Align ground truth and predictions
         y_true = []

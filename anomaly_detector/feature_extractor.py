@@ -98,6 +98,7 @@ def extract_features(df: pd.DataFrame) -> pd.DataFrame:
     if "std" not in features.columns:
         features["std"] = 0.0
     else:
-        features["std"] = features["std"].replace(-1.0, 0.0) # We filled NaNs with -1.0 above, std should be 0.0
+        # We filled NaNs with -1.0 above; std should be 0.0 for single-point seqs
+        features["std"] = features["std"].replace(-1.0, 0.0)
 
     return features.reset_index()
