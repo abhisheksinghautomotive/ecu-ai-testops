@@ -1,9 +1,8 @@
 import pandas as pd
+from pytest import CaptureFixture
 
 from anomaly_detector.evaluator import Evaluator
 
-
-from pytest import CaptureFixture
 
 def test_evaluate_predictions(capsys: CaptureFixture) -> None:
     # Setup dummy data with 1 anomaly and 1 normal

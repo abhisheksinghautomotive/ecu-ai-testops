@@ -85,10 +85,10 @@ def generate_obd_sequences(
         pid_key = pid_keys[i % len(pid_keys)]
         pid_info = PIDS[pid_key]
         signal_id = str(uuid.uuid4())
-        
+
         # Determine a random sequence length between 5 and 20 points
         seq_length = rng.integers(5, 20)
-        
+
         # Start time for this sequence
         seq_time = base_time + timedelta(seconds=i * 2)
 
@@ -96,10 +96,10 @@ def generate_obd_sequences(
             # Gaussian distribution centred on typical operating value
             raw_value = rng.normal(pid_info["typical_centre"], pid_info["typical_std"])
             value = float(np.clip(raw_value, pid_info["min"], pid_info["max"]))
-    
+
             formatted = _format_obd_value(value, pid_key)
             timestamp = seq_time + timedelta(milliseconds=j * 100)
-    
+
             sequences.append(
                 {
                     "signal_id": signal_id,
@@ -117,11 +117,11 @@ def generate_obd_sequences(
         n_faults = int(n * fault_rate)
         fault_indices = rng.choice(n, size=n_faults, replace=False)
         fault_seq_set = set(fault_indices)
-        
+
         for seq in sequences:
             if seq.get("sequence_index") in fault_seq_set:
                 seq["fault_label"] = True
-                
+
     # Clean up internal tracking
     for seq in sequences:
         seq.pop("sequence_index", None)

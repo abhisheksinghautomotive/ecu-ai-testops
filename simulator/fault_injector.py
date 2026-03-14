@@ -111,7 +111,7 @@ def inject_faults(
     for idx in fault_signal_indices:
         fault_type = rng.choice(FAULT_TYPES)
         faulty_signal_id = unique_signals[int(idx)]
-        
+
         # Apply the chosen fault type to every row in this sequence
         for row_idx in signal_groups[faulty_signal_id]:
             seq = result[row_idx]

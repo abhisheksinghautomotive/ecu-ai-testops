@@ -95,10 +95,10 @@ def generate_uds_sequences(
         did_key = did_keys[i % len(did_keys)]
         did_info = DIDS[did_key]
         signal_id = str(uuid.uuid4())
-        
+
         # Determine a random sequence length between 5 and 20 points
         seq_length = rng.integers(5, 20)
-        
+
         # Start time for this sequence
         seq_time = base_time + timedelta(seconds=i * 2)
 
@@ -107,12 +107,12 @@ def generate_uds_sequences(
             raw_value = rng.uniform(did_info["min"], did_info["max"])
             noise = rng.normal(0, (did_info["max"] - did_info["min"]) * 0.01)
             value = float(np.clip(raw_value + noise, did_info["min"], did_info["max"]))
-    
+
             response_hex = _build_positive_response(
                 did_key, value, did_info["byte_length"]
             )
             timestamp = seq_time + timedelta(milliseconds=j * 100)
-    
+
             sequences.append(
                 {
                     "signal_id": signal_id,
@@ -133,7 +133,7 @@ def generate_uds_sequences(
         for seq in sequences:
             if seq.get("sequence_index") in fault_seq_set:
                 seq["fault_label"] = True
-                
+
     # Clean up internal tracking
     for seq in sequences:
         seq.pop("sequence_index", None)
