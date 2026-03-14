@@ -1,0 +1,59 @@
+- test_id: UDS_01_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_02_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_03_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_04_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_05_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_06_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_07_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_08_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_09_Normal_Response
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "62"
+  max_response_time_ms: 50
+
+- test_id: UDS_10_Intentional_Fail
+  signal_type: UDS
+  service_id: "0x22"
+  expected_response: "7F"
+  max_response_time_ms: 50

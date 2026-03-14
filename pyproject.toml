@@ -21,6 +21,7 @@ dev = [
     "ruff>=0.4.0",
     "mypy>=1.8.0",
     "pandas-stubs>=2.0.0",
+    "types-PyYAML>=6.0.12",
 ]
 
 [tool.ruff]
@@ -43,7 +44,8 @@ testpaths = ["tests"]
 addopts = "-v"
 
 [tool.coverage.run]
-source = ["simulator"]
+source = ["simulator", "test_runner"]
+omit = ["*/__main__.py"]
 
 [tool.coverage.report]
 fail_under = 80

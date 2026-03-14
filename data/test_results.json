@@ -1,0 +1,153 @@
+{
+  "summary": {
+    "total": 20,
+    "passed": 18,
+    "failed": 2,
+    "pass_rate": 0.9,
+    "generated_at": "2026-03-14T15:36:55.045648+00:00"
+  },
+  "results": [
+    {
+      "test_id": "UDS_01_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_02_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_03_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_04_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_05_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_06_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_07_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_08_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_09_Normal_Response",
+      "status": "PASS",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "62",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "UDS_10_Intentional_Fail",
+      "status": "FAIL",
+      "actual_value": "62F1A0009A",
+      "expected_value_str": "7F",
+      "execution_time_ms": 0,
+      "delta": "Expected 7F, got 62F1A0009A"
+    },
+    {
+      "test_id": "OBD_01_RPM_Normal",
+      "status": "PASS",
+      "actual_value": 2933.0,
+      "expected_value_str": "3000.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_02_RPM_Normal",
+      "status": "PASS",
+      "actual_value": 2933.0,
+      "expected_value_str": "3000.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_03_RPM_Normal",
+      "status": "PASS",
+      "actual_value": 2933.0,
+      "expected_value_str": "3000.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_04_Coolant_Temp_Normal",
+      "status": "PASS",
+      "actual_value": 86.85,
+      "expected_value_str": "90.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_05_Coolant_Temp_Normal",
+      "status": "PASS",
+      "actual_value": 86.85,
+      "expected_value_str": "90.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_06_Coolant_Temp_Normal",
+      "status": "PASS",
+      "actual_value": 86.85,
+      "expected_value_str": "90.0",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_07_O2_Sensor_Normal",
+      "status": "PASS",
+      "actual_value": 0.428,
+      "expected_value_str": "0.45",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_08_O2_Sensor_Normal",
+      "status": "PASS",
+      "actual_value": 0.428,
+      "expected_value_str": "0.45",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_09_O2_Sensor_Normal",
+      "status": "PASS",
+      "actual_value": 0.428,
+      "expected_value_str": "0.45",
+      "execution_time_ms": 0
+    },
+    {
+      "test_id": "OBD_10_Intentional_Fail",
+      "status": "FAIL",
+      "actual_value": 2933.0,
+      "expected_value_str": "9000.0",
+      "execution_time_ms": 0,
+      "delta": "Median 2933.00 is outside 9000.0 \u00b11.0 (diff: 6067.00)"
+    }
+  ]
+}
