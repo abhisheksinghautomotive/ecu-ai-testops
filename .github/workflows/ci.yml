@@ -33,12 +33,13 @@ jobs:
           pip install ruff mypy pandas-stubs types-PyYAML
           pip install -r simulator/requirements.txt
           if [ -f "test_runner/requirements.txt" ]; then pip install -r test_runner/requirements.txt; fi
+          if [ -f "anomaly_detector/requirements.txt" ]; then pip install -r anomaly_detector/requirements.txt; fi
 
       - name: Run Ruff linter
-        run: ruff check simulator/ test_runner/ tests/
+        run: ruff check simulator/ test_runner/ anomaly_detector/ tests/
 
       - name: Run MyPy type checker
-        run: mypy simulator/ test_runner/
+        run: mypy simulator/ test_runner/ anomaly_detector/ --ignore-missing-imports
 
   test:
     name: test
@@ -67,11 +68,14 @@ jobs:
           pip install pytest pytest-cov
           pip install -r simulator/requirements.txt
           if [ -f "test_runner/requirements.txt" ]; then pip install -r test_runner/requirements.txt; fi
+          if [ -f "anomaly_detector/requirements.txt" ]; then pip install -r anomaly_detector/requirements.txt; fi
 
       - name: Run tests with coverage
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: >
           pytest tests/ -v
-          --cov=simulator --cov=test_runner
+          --cov=simulator --cov=test_runner --cov=anomaly_detector
           --cov-report=term-missing
           --cov-fail-under=80
 

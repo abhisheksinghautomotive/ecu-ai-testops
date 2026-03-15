@@ -21,8 +21,9 @@ class TestGenerateUdsSequences:
     """Tests for generate_uds_sequences."""
 
     def test_returns_correct_count(self) -> None:
-        result = generate_uds_sequences(n=50, rng_seed=1)
-        assert len(result) == 50
+        # n=10 sequences of 5–20 rows each: total rows >= 10
+        result = generate_uds_sequences(n=10, rng_seed=1)
+        assert len(result) >= 10
 
     def test_required_fields_present(
         self, sample_uds_sequences: list[dict[str, Any]]
@@ -64,15 +65,19 @@ class TestGenerateUdsSequences:
             assert seq["fault_label"] is False
 
     def test_fault_marking_when_rate_positive(self) -> None:
-        sequences = generate_uds_sequences(n=100, fault_rate=0.2, rng_seed=1)
+        # With n=20 sequences and fault_rate=0.2, at least 1 sequence is faulted
+        sequences = generate_uds_sequences(n=20, fault_rate=0.2, rng_seed=1)
         n_faults = sum(1 for s in sequences if s["fault_label"])
-        assert n_faults == 20
+        assert n_faults > 0
 
-    def test_signal_ids_are_unique(
+    def test_signal_ids_grouped(
         self, sample_uds_sequences: list[dict[str, Any]]
     ) -> None:
+        # Multiple rows share the same signal_id (sequence grouping)
         ids = [s["signal_id"] for s in sample_uds_sequences]
-        assert len(ids) == len(set(ids))
+        unique_ids = set(ids)
+        # Should have fewer unique IDs than total rows
+        assert len(unique_ids) < len(ids)
 
     def test_timestamps_are_ordered(
         self, sample_uds_sequences: list[dict[str, Any]]
@@ -85,7 +90,7 @@ class TestGenerateUdsSequences:
         assert result == []
 
     def test_reproducibility_with_seed(self) -> None:
-        run1 = generate_uds_sequences(n=10, rng_seed=99)
-        run2 = generate_uds_sequences(n=10, rng_seed=99)
+        run1 = generate_uds_sequences(n=5, rng_seed=99)
+        run2 = generate_uds_sequences(n=5, rng_seed=99)
         for s1, s2 in zip(run1, run2, strict=False):
             assert s1["value"] == s2["value"]

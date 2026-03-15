@@ -94,29 +94,51 @@ def generate_uds_sequences(
     for i in range(n):
         did_key = did_keys[i % len(did_keys)]
         did_info = DIDS[did_key]
+        signal_id = str(uuid.uuid4())
 
-        # Normal value within operating range + small Gaussian noise
-        raw_value = rng.uniform(did_info["min"], did_info["max"])
-        noise = rng.normal(0, (did_info["max"] - did_info["min"]) * 0.01)
-        value = float(np.clip(raw_value + noise, did_info["min"], did_info["max"]))
+        # Determine a random sequence length between 5 and 20 points
+        seq_length = rng.integers(5, 20)
 
-        response_hex = _build_positive_response(
-            did_key, value, did_info["byte_length"]
-        )
-        timestamp = base_time + timedelta(milliseconds=i * 10)
+        # Start time for this sequence
+        seq_time = base_time + timedelta(seconds=i * 2)
 
-        sequences.append(
-            {
-                "signal_id": str(uuid.uuid4()),
-                "timestamp": timestamp.isoformat(),
-                "value": response_hex,
-                "signal_type": "UDS",
-                "service_id": UDS_SERVICE_ID,
-                "fault_label": False,
-            }
-        )
+        for j in range(seq_length):
+            # Normal value within operating range + small Gaussian noise
+            raw_value = rng.uniform(did_info["min"], did_info["max"])
+            noise = rng.normal(0, (did_info["max"] - did_info["min"]) * 0.01)
+            value = float(np.clip(raw_value + noise, did_info["min"], did_info["max"]))
+
+            response_hex = _build_positive_response(
+                did_key, value, did_info["byte_length"]
+            )
+            timestamp = seq_time + timedelta(milliseconds=j * 100)
+
+            sequences.append(
+                {
+                    "signal_id": signal_id,
+                    "timestamp": timestamp.isoformat(),
+                    "value": response_hex,
+                    "signal_type": "UDS",
+                    "service_id": UDS_SERVICE_ID,
+                    "fault_label": False,
+                    "sequence_index": i, # Used internally for fault injection tracking
+                }
+            )
 
     # Pre-mark faults if requested (values will be overwritten by fault_injector)
+    if fault_rate > 0.0:
+        n_faults = int(n * fault_rate)
+        fault_indices = rng.choice(n, size=n_faults, replace=False)
+        fault_seq_set = set(fault_indices)
+        for seq in sequences:
+            if seq.get("sequence_index") in fault_seq_set:
+                seq["fault_label"] = True
+
+    # Clean up internal tracking
+    for seq in sequences:
+        seq.pop("sequence_index", None)
+
+    return sequences
     if fault_rate > 0.0:
         n_faults = int(n * fault_rate)
         fault_indices = rng.choice(n, size=n_faults, replace=False)
