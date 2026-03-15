@@ -57,7 +57,8 @@ def test_detect_anomalies(mock_client_class: MagicMock) -> None:
     assert report["anomalies"][0]["anomaly_score"] == 0.8 # Output flipped the sign
 
 
-def test_detect_anomalies_empty_df() -> None:
+@patch("anomaly_detector.detector.StorageClient")
+def test_detect_anomalies_empty_df(mock_client_class: MagicMock) -> None:
     detector = Detector()
     df = pd.DataFrame()
     report = detector.detect_anomalies(df, "empty.json")
