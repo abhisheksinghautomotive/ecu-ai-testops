@@ -33,9 +33,12 @@ class TestInjectFaults:
         self, sample_mixed_sequences: list[dict[str, Any]]
     ) -> None:
         result = inject_faults(sample_mixed_sequences, fault_rate=0.1, rng_seed=1)
-        n_faults = sum(1 for s in result if s["fault_label"])
-        expected = int(len(sample_mixed_sequences) * 0.1)
-        assert n_faults == expected
+        # The injector faults at the sequence level (per unique signal_id),
+        # so count faulted unique signal_ids, not raw rows.
+        faulted_ids = {s["signal_id"] for s in result if s["fault_label"]}
+        all_ids = {s["signal_id"] for s in result}
+        expected_n_faults = int(len(all_ids) * 0.1)
+        assert len(faulted_ids) == expected_n_faults
 
     def test_does_not_mutate_original(
         self, sample_mixed_sequences: list[dict[str, Any]]
